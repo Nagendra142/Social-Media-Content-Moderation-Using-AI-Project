@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Data</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+      }
+      table {
+        width: 80%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        background-color: #fff;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+      th,
+      td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #dddddd;
+      }
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+      .btn-container {
+        display: flex;
+        justify-content: space-between;
+      }
+      .btn {
+        padding: 6px 10px;
+        border: none;
+        background-color: #4caf50;
+        color: white;
+        cursor: pointer;
+      }
+      .btn:hover {
+        background-color: #45a049;
+      }
+      .adminResponse{
+        height:80vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .btnn{
+        width:70px;
+        background-color: aqua;
+        border:none;
+        height:30px;
+        cursor: pointer;
+      }
+      input{
+        height:30px;
+        width:300px;
+
+      }
+    </style>
+  </head>
+  <body>
+    <div style="display: flex; justify-content: center; align-items: center; height: 10vh;">
+        <a style="text-decoration: none;" href="/logout">
+        <h3 style="border:1px solid black; padding:10px">Logout</h3></a>
+    </div>
+    <div class="adminResponse" style="height:30vh">
+    <form action="/accept" method="POST">
+        <input type="text" class="message" name="message" placeholder="Message">
+        <input class="btnn" type="submit" value="Send">
+      </form>
+    </div>
+    <table>
+      <thead>
+        {% if data|length==0 %}
+        <tr>
+          <div class="adminResponse">
+            <h1>Records are Empty</h1>
+          </div>
+        </tr>
+        {% else %}
+        <tr>
+          <th>Content</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in data %}
+        <tr>
+          <td>{{ row.name }}</td>
+          <td class="btn-container">
+            <form action="/accept" method="post">
+              <input type="text" name="message" value="{{row.name}}" hidden />
+              <button class="btn" type="submit">Accept</button>
+            </form>
+          </td>
+          <td>
+            <form action="/reject" method="post">
+              <input type="text" name="message" value="{{row.name}}" hidden />
+              <button class="btn" type="submit">Remove</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %} {% endif %}{{Message}}
+      </tbody>
+    </table>
+  </body>
+</html>
